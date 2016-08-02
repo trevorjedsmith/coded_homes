@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body class="container-fluid">
+        <header>
+            <div class="row-fluid">
+                <div class="span6"><a href="/"><img alt="CodedHomes" title="CodedHomes" src="/img/coded-homes-logo.png" /></a></div>
+                <div class="span6">
+                    <div class="pull-right online standout">
+                        @if (ViewBag.IncludeManifest != null)
+                        {
+                            @Html.ActionLink("Manage Account", "manage", "account",new{}, new {@class="btn" })
+                        } else
+                        {
+                            @Html.Partial("_LoginPartial")
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+        <article>
+            @RenderBody()
+        </article>
+        <footer>
+            <small>&copy; @DateTime.Now.Year CodedHomes</small>
+        </footer>
+        @RenderSection("breakout", required: false)
+        @Scripts.Render("~/bundles/site")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
