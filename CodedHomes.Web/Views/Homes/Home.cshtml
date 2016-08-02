@@ -14,41 +14,230 @@
         }
     </style>
 
-@section scripts{
-    <script>
-        $(function () {
-            var homeDataForm = $('#home-data-form')[0];
-            var progressBar = $('#progress-bar');
 
-            this.id = ko.observable("@Model.Home.Id");
-            this.streetAddress = ko.observable("@Model.Home.StreetAddress");
-            this.streetAddress2 = ko.observable("@Model.Home.StreetAddress2");
-            this.city = ko.observable("@Model.Home.City");
-            this.zipCode = ko.observable("@((Model.Home.ZipCode > 0) ? Model.Home.ZipCode.ToString() : "")");
-            this.bedrooms = ko.observable("@Model.Home.Bedrooms");
-            this.bathrooms = ko.observable("@Model.Home.Bathrooms");
-            this.squareFeet = ko.observable("@Model.Home.SquareFeet");
-            this.price = ko.observable("@Model.Home.Price");
-            this.description = ko.observable("@Model.Home.Description");
-            this.imageName = ko.observable("@Model.Home.ImageName");
-            this.imageUrl = ko.computed({
-                read: function () {
-                    var
-                        fileName = (this.imageName() === '') ?
-                            'no-image-large.png' : this.imageName(),
-                        url = '@Model.ImageUrlPrefix' + fileName;
+@section scripts {
+    <script>
+
+        $(function () {
+
+            //*
+           
+            // */
+
+            var
+                homeDataForm = $("#home-data-form")[0],
+                progressBar = $('#progress-bar');
+
+            var Home = function () {
+                this.id = ko.observable("@Model.Home.Id");
+                this.streetAddress = ko.observable("@Model.Home.StreetAddress");
+                this.streetAddress2 = ko.observable("@Model.Home.StreetAddress2");
+                this.city = ko.observable("@Model.Home.City");
+                this.zipCode = ko.observable("@((Model.Home.ZipCode > 0) ? Model.Home.ZipCode.ToString() : "")");
+                this.bedrooms = ko.observable("@Model.Home.Bedrooms");
+                this.bathrooms = ko.observable("@Model.Home.Bathrooms");
+                this.squareFeet = ko.observable("@Model.Home.SquareFeet");
+                this.price = ko.observable("@Model.Home.Price");
+                this.description = ko.observable("@Model.Home.Description");
+                this.imageName = ko.observable("@Model.Home.ImageName");
+                this.imageUrl = ko.computed({
+                    read: function () {
+                        var
+                            fileName = (this.imageName() === '') ?
+                                'no-image-large.png' : this.imageName(),
+                            url = '@Model.ImageUrlPrefix' + fileName;
 
                         return url;
                     },
-                   write: function (value) {
-                       var parts = value.split('/');
-                       this.imageName(parts[parts.length - 1])
-                   },
-                   owner: this
-               });
-        });
-    </script>
+                    write: function (value) {
+                        var parts = value.split('/');
+                        this.imageName(parts[parts.length - 1])
+                    },
+                    owner: this
+                });
+            };
 
+            var ViewModel = function (home) {
+                this.model = home;
+
+                this.errorMessage = ko.observable();
+
+                // Offline Support
+                this.isOffline = ko.observable(false);
+
+                this.goToOfflinePage = function () {
+                    window.location = '/homes/offline';
+                };
+
+                this.hasOfflineHomesToSaveToServer = ko.computed(function () {
+                    if (Modernizr.localstorage) {
+                        var
+                            ls = window.localStorage.getItem('codedhomes-new-homes'),
+                            result = (ls !== null &&
+                                        ls !== undefined &&
+                                        ls !== 'undefined' &&
+                                        ls !== '[]');
+
+                        return result;
+                    }
+                    return false;
+                });
+                // Offline
+
+                this.hideProgressBar = function (showAfterHideFunc) {
+                    progressBar.fadeOut(function () {
+                        showAfterHideFunc();
+                    });
+                };
+
+                this.showError = function (error) {
+                    var resetUI = function () {
+                        $('#command-buttons').fadeIn();
+                        $('#fail-msg-container').fadeIn();
+                    };
+
+                    vm.hideProgressBar(resetUI);
+
+                    if (error.statusText) {
+                        vm.errorMessage(error.statusText);
+                    }
+
+                    if (error.responseText) {
+                        var
+                            msg = JSON.parse(error.responseText),
+                            keys = _.keys(msg),
+                            txt = '';
+
+                        _.each(keys, function (key) {
+                            txt += msg[key] + ' ';
+                        });
+                        vm.errorMessage(txt);
+                    }
+                };
+
+                this.showImageUpload = function () {
+                    $('#upload-button').hide();
+                    $('#upload-form-container').removeClass('none');
+                };
+
+                this.hideImageUpload = function () {
+                    $('#upload-button').show();
+                    $('#upload-form-container').addClass('none');
+                };
+
+                this.showImageError = function (error) {
+                    $('#img-fail-msg-container').fadeIn();
+                    vm.errorMessage(error.statusText);
+                };
+
+                this.showSuccess = function () {
+                    var resetUI = function () {
+                        $('#command-buttons').fadeIn();
+                        $('#fail-msg-container').fadeOut();
+                        $('#delete-msg-container').fadeOut();
+                        $('#success-msg-container').fadeIn();
+                    };
+
+                    vm.hideProgressBar(resetUI);
+
+                    $("#upload-form")[0].reset();
+
+                    var fadeOut = function () {
+                        $('#success-msg-container').fadeOut()
+                    };
+
+                    _.delay(fadeOut, 5000);
+                };
+
+                this.showDelete = function () {
+                    $('#fail-msg-container').fadeOut();
+                    $('#delete-msg-container').fadeIn();
+
+                    $('.cmd').each(function (i, element) {
+                        $(element).prop('disabled', true).addClass('muted');
+                    });
+                }
+
+                this.uploadImage = function () {
+                    if (window.FormData !== undefined) {
+                        var
+                            data = new FormData(),
+                            file = $('#image-upload')[0].files[0];
+
+                        data.append('image', file);
+                        data.append('id', vm.model.id());
+
+                        return homesDataService.saveImage(data);
+                    }
+                };
+
+                this.hasImageToUpload = function () {
+                    return $('#image-upload')[0].files.length > 0;
+                };
+
+                this.save = function () {
+
+                    vm.hideImageUpload();
+
+                    var validationUtility = new ValidationUtility();
+
+                    if (validationUtility.validate('home-data-form')) {
+                        $('#command-buttons').hide();
+                        $('#progress-bar').fadeIn();
+
+                        var home = ko.toJS(this.model);
+
+                        homesDataService.save(home).done(function (response) {
+                            if (response.id) {
+                                vm.model.id(response.id);
+                            }
+
+                            if (vm.hasImageToUpload()) {
+                                vm.uploadImage().done(function (result) {
+
+                                    if (result.status === 'error') {
+                                        vm.showImageError(result);
+                                    }
+                                    else {
+                                        vm.model.imageUrl(result.imageUrl);
+                                        vm.showSuccess();
+                                    }
+
+                                }).fail(function (error) {
+                                    vm.showImageError();
+                                });
+                            } else {
+                                vm.showSuccess();
+                            }
+
+                        }).fail(function (error) {
+                            vm.showError(error);
+                        });
+                    }
+                };
+
+                this.requestDelConfirm = function () {
+                    $('#del-confirm').modal();
+                };
+
+                this.del = function () {
+                    var home = ko.toJS(this.model);
+                    homesDataService.del(home).done(function (response) {
+                        vm.showDelete();
+                    }).fail(function (error) {
+                        vm.showError(error);
+                    }).always(function () {
+                        $('#del-confirm').modal('hide');
+                    });
+                };
+            };
+
+            var vm = new ViewModel(new Home());
+            ko.applyBindings(vm);
+
+          
+        });
+    </script>    
 }
 
 <div class="row-fluid">

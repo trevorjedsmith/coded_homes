@@ -36,6 +36,16 @@ var homesDataService = function () {
                 }
 
                 return this.commit(type, url, data);
+            },
+
+            saveImage: function (data) {
+                return $.ajax({
+                    type: httpVerbs.POST,
+                    url: '/homes/uploadimage',
+                    processData: false,
+                    contentType: false,
+                    data:data
+                });
             }
 
         };
@@ -43,6 +53,7 @@ var homesDataService = function () {
 
     return {
         save: ds.save,
-        del: ds.del
+        del: ds.del,
+        saveImage:ds.saveImage
     }
 }();
