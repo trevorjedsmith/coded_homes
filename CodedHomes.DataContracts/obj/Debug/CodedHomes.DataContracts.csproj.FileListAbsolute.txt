@@ -1,0 +1,5 @@
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.DataContracts\bin\Debug\CodedHomes.DataContracts.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.DataContracts\bin\Debug\CodedHomes.DataContracts.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.DataContracts\obj\Debug\CodedHomes.DataContracts.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.DataContracts\obj\Debug\CodedHomes.DataContracts.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.DataContracts\obj\Debug\CodedHomes.DataContracts.csprojResolveAssemblyReference.cache
