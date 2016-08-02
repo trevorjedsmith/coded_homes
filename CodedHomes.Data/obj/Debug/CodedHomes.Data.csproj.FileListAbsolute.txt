@@ -1,0 +1,14 @@
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.Data.dll.config
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.Data.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.Data.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.Models.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\EntityFramework.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.Models.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\EntityFramework.xml
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\obj\Debug\CodedHomes.Data.csprojResolveAssemblyReference.cache
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\obj\Debug\CodedHomes.Data.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\obj\Debug\CodedHomes.Data.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.DataContracts.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Data\bin\Debug\CodedHomes.DataContracts.pdb
