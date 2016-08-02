@@ -1,0 +1,7 @@
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\bin\CodedHomes.Admin.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\bin\CodedHomes.Admin.pdb
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\bin\EntityFramework.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\bin\EntityFramework.xml
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\obj\Debug\CodedHomes.Admin.csprojResolveAssemblyReference.cache
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\obj\Debug\CodedHomes.Admin.dll
+C:\Users\Owner\Desktop\Pluralsight Projects\CodedHomes.Models\CodedHomes.Admin\obj\Debug\CodedHomes.Admin.pdb
